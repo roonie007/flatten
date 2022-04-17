@@ -128,3 +128,27 @@ Deno.test({
     assertEquals(unflatten(flattedWithDash, "--"), obj);
   },
 });
+
+Deno.test({
+  name: "Flat object but keep a.b unflatten -- b is ignored",
+  fn(): void {
+    const flatted = flatten(obj, { ignoreIfProperty: ["b"] });
+    const b = flatted["a.b"] as Record<string, unknown>;
+
+    assertEquals(b.b2, obj.a.b.b2);
+    assertEquals(b.b3, obj.a.b.b3);
+    assertEquals(b.b4, obj.a.b.b4);
+  },
+});
+
+Deno.test({
+  name: "Flat object but keep a.b unflatten -- contains an ignored property b2",
+  fn(): void {
+    const flatted = flatten(obj, { ignoreIfContainsProperty: ["b2"] });
+    const b = flatted["a.b"] as Record<string, unknown>;
+
+    assertEquals(b.b2, obj.a.b.b2);
+    assertEquals(b.b3, obj.a.b.b3);
+    assertEquals(b.b4, obj.a.b.b4);
+  },
+});

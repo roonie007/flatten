@@ -58,6 +58,35 @@ flatten(obj, { delimiter: "--" });
 //   "arr--3--key4--nested": 1,
 //   "arr--3--key5": undefined
 // }
+
+flatten(obj, ignoreIfProperty: ["key3"]);
+// Since key3 is an ignored property b, then it will not be flattened
+// {
+//   "key1.keyA": "valueI",
+//   "key2.keyB": "valueII",
+//   "key3": { a: { b: { c: 2 } } },
+//   "arr.0": "item1",
+//   "arr.1": null,
+//   "arr.2.0": "nested1",
+//   "arr.2.1": "nested2",
+//   "arr.3.key4.nested": 1,
+//   "arr.3.key5": undefined
+// }
+
+flatten(obj, ignoreIfContainsProperty: ["b"]);
+// Since key3.a contains an ignored property "b", then it will not be flattened
+// {
+//   "key1.keyA": "valueI",
+//   "key2.keyB": "valueII",
+//   "key3.a": { b: { c: 2 } },
+//   "arr.0": "item1",
+//   "arr.1": null,
+//   "arr.2.0": "nested1",
+//   "arr.2.1": "nested2",
+//   "arr.3.key4.nested": 1,
+//   "arr.3.key5": undefined
+// }
+
 ```
 
 #### Options
